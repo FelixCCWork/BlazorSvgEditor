@@ -137,14 +137,8 @@ public partial class SvgEditor
             string result = CssClass + " ";
             
             if (EditMode != EditMode.AddTool) return result.Trim();
-            
-            return ShapeType switch
-            {
-                ShapeType.Polygon => result + "cursor-add-polygon",
-                ShapeType.Rectangle => result + "cursor-add-rectangle",
-                ShapeType.Circle => result + "cursor-add-circle",
-                _ => result.Trim()
-            };
+
+            return result += "";
         }
     }
 }
