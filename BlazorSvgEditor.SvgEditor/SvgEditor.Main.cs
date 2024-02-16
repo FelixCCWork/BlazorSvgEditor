@@ -136,9 +136,10 @@ public partial class SvgEditor
         {
             string result = CssClass + " ";
             
-            if (EditMode != EditMode.AddTool) return result.Trim();
+            if (EditMode != EditMode.AddTool) 
+                return result.Trim();
 
-            return result += "";
+            return result += "cursor-add-shape";
         }
     }
 }

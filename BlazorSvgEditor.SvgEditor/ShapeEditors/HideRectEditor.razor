@@ -1,0 +1,36 @@
+@using BlazorSvgEditor.SvgEditor.Helper
+@using BlazorSvgEditor.SvgEditor.Misc
+@using BlazorSvgEditor.SvgEditor.Shapes
+@inherits ShapeEditor<HideRect>
+
+<svg @ref=ElementReference
+     @onpointerdown="Select"
+     @onclick="ClickShape"
+     @onpointerenter="Enter"
+     @onpointerleave="Leave"
+     style="cursor: @(SvgElement.State == ShapeState.Selected ? "move" : "pointer")">
+
+    <rect x=@SvgElement.X.ToInvString()
+          y=@SvgElement.Y.ToInvString()
+          width=@SvgElement.Width.ToInvString()
+          height=@SvgElement.Height.ToInvString()
+          stroke="@SvgElement.Stroke"
+          stroke-width="@SvgElement.StrokeWidth"
+          stroke-linecap="@SvgElement.StrokeLinecap"
+          stroke-linejoin="@SvgElement.StrokeLinejoin"
+          stroke-dasharray="@SvgElement.StrokeDasharray"
+          stroke-dashoffset="@SvgElement.StrokeDashoffset.ToInvString()"
+          fill="@SvgElement.Fill"
+          fill-opacity="@SvgElement.FillOpacity"
+          style="cursor: @(SvgElement.State == ShapeState.Selected ? "move" : "pointer")">
+
+    </rect>
+</svg>
+
+@if (SvgElement.State == ShapeState.Selected && SvgElement.SvgEditor.EditMode != EditMode.Add && SvgElement.SvgEditor.EditMode != EditMode.Move)
+{
+    <Anchor RingColor="@SvgElement.Color" OnPointerDown="() => OnAnchorSelected(0)" CssCursor="nwse-resize" Position="new Coord<double>(SvgElement.X, SvgElement.Y)" SvgEditor="SvgElement.SvgEditor" />
+    <Anchor RingColor="@SvgElement.Color" OnPointerDown="() => OnAnchorSelected(1)" CssCursor="nesw-resize" Position="new Coord<double>(SvgElement.X + SvgElement.Width, SvgElement.Y)" SvgEditor="SvgElement.SvgEditor" />
+    <Anchor RingColor="@SvgElement.Color" OnPointerDown="() => OnAnchorSelected(2)" CssCursor="nwse-resize" Position="new Coord<double>(SvgElement.X + SvgElement.Width, SvgElement.Y + SvgElement.Height)" SvgEditor="SvgElement.SvgEditor" />
+    <Anchor RingColor="@SvgElement.Color" OnPointerDown="() => OnAnchorSelected(3)" CssCursor="nesw-resize" Position="new Coord<double>(SvgElement.X, SvgElement.Y + SvgElement.Height)" SvgEditor="SvgElement.SvgEditor" />
+}

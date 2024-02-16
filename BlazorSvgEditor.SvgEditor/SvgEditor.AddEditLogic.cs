@@ -7,27 +7,27 @@ namespace BlazorSvgEditor.SvgEditor;
 
 public partial class SvgEditor
 {
-    private ShapeType ShapeType { get; set; } = ShapeType.None; 
+    private ShapeType ShapeType { get; set; } = ShapeType.None;
 
     public void SelectShape(Shape shape, PointerEventArgs eventArgs)
     {
         SelectedShape?.UnSelectShape();
-        
-        SelectedShape = shape;      //Das neue Shape wird ausgewählt
-        SelectedShape.SelectShape(); //Das neue Shape wird ausgewählt
+
+        SelectedShape = shape;
+        SelectedShape.SelectShape();
 
         EditMode = EditMode.Move;
         MoveStartDPoint = DetransformOffset(eventArgs);
         StateHasChanged();
     }
-    
+
     private void AddElement(ShapeType shapeType)
     {
-        if(_imageSourceLoading) return;
-        
+        if (_imageSourceLoading) return;
+
         EditMode = EditMode.AddTool;
         ShapeType = shapeType;
-        
+
         SelectedShape?.UnSelectShape();
         SelectedShape = null;
     }
@@ -40,7 +40,7 @@ public partial class SvgEditor
         {
             case ShapeType.None:
                 return;
-            
+
             case ShapeType.Polygon:
                 newShape = new Polygon(this)
                 {
@@ -50,7 +50,7 @@ public partial class SvgEditor
                     }
                 };
                 break;
-            
+
             case ShapeType.Rectangle:
                 newShape = new Rectangle(this)
                 {
@@ -58,7 +58,7 @@ public partial class SvgEditor
                     Y = DetransformOffset(e).Y
                 };
                 break;
-            
+
             case ShapeType.Circle:
                 newShape = new Circle(this)
                 {
@@ -68,20 +68,35 @@ public partial class SvgEditor
                 break;
 
             case ShapeType.Arrow:
+                double arrowX = DetransformOffset(e).X;
+                double arrowY = DetransformOffset(e).Y;
                 newShape = new Arrow(this)
                 {
-                    X1 = DetransformOffset(e).X,
-                    Y1 = DetransformOffset(e).Y,
-                    X2 = DetransformOffset(e).X + 0.1,
-                    Y2 = DetransformOffset(e).Y + 0.1
+                    X1 = arrowX,
+                    Y1 = arrowY,
+                    X2 = arrowX + 0.1,
+                    Y2 = arrowY + 0.1
                 };
                 break;
 
             case ShapeType.NumberMarker:
+                double markerX = DetransformOffset(e).X;
+                double markerY = DetransformOffset(e).Y;
                 newShape = new NumberMarker(this)
                 {
-                    Cx = DetransformOffset(e).X,
-                    Cy = DetransformOffset(e).Y
+                    Cx = markerX,
+                    Cy = markerY,
+                    ArrowX = markerX + 0.1,
+                    ArrowY = markerY + 0.1,
+                };
+                OnMarkerAdded((NumberMarker)newShape);
+                break;
+            case ShapeType.HideRect:
+                newShape = new HideRect(this)
+                {
+                    X = DetransformOffset(e).X,
+                    Y = DetransformOffset(e).Y,
+                    Fill = "black"
                 };
                 break;
 
@@ -90,22 +105,24 @@ public partial class SvgEditor
         }
 
         var newShapeId = -1;
-        if (Shapes.Count > 0) newShapeId = Math.Min(Enumerable.Min<Shape>(Shapes, x => x.CustomId) - 1, newShapeId);
+        if (Shapes.Count > 0)
+            newShapeId = Math.Min(Enumerable.Min<Shape>(Shapes, x => x.CustomId) - 1, newShapeId);
 
         newShape.CustomId = newShapeId;
 
-        if (_newShapeColor != null) newShape.Color = _newShapeColor;
-        
+        if (_newShapeColor != null)
+            newShape.Color = _newShapeColor;
+
         Shapes.Add(newShape);
 
         SelectedShape = newShape;
         SelectedShape.SelectShape();
-                
+
         EditMode = EditMode.Add;
 
         await Task.Yield();
     }
-    
+
     public async Task ShapeAddedCompleted(Shape shape)
     {
         SelectedShape = shape;

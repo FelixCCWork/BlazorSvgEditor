@@ -3,36 +3,59 @@
 @using BlazorSvgEditor.SvgEditor.Shapes
 @inherits ShapeEditor<NumberMarker>
 
-<circle @ref=ElementReference
+<svg @ref=ElementReference
+     @onpointerdown="Select"
+     @onclick="ClickShape"
+     @onpointerenter="Enter"
+     @onpointerleave="Leave"
+     style="cursor: @(SvgElement.State == ShapeState.Selected ? "move" : "pointer")">
 
-        @onpointerdown="Select"
-        @onclick="ClickShape"
-        @onpointerenter="Enter"
-        @onpointerleave="Leave"
+    <defs>
+        <marker id="arrow"
+                orient="auto"
+                markerWidth="16"
+                markerHeight="16"
+                refX="0"
+                refY="4">
+            <path d="M 0 0 L 1.2 4 L 0 8 L 10 4 z"
+                  fill="@SvgElement.Stroke" />
+        </marker>
+    </defs>
 
-        cx=@SvgElement.Cx.ToInvString()
-        cy=@SvgElement.Cy.ToInvString()
-        r=@SvgElement.R.ToInvString()
+    <line x1=@SvgElement.Cx.ToInvString()
+          y1=@SvgElement.Cy.ToInvString()
+          x2=@SvgElement.ArrowX.ToInvString()
+          y2=@SvgElement.ArrowY.ToInvString()
+          stroke="transparent"
+          stroke-width="4px"
+          marker-end="url(#arrow)" />
 
-        stroke="@SvgElement.Stroke"
-        stroke-width="@SvgElement.StrokeWidth"
-        stroke-linecap="@SvgElement.StrokeLinecap"
-        stroke-linejoin="@SvgElement.StrokeLinejoin"
-        stroke-dasharray="@SvgElement.StrokeDasharray"
-        stroke-dashoffset="@SvgElement.StrokeDashoffset.ToInvString()"
+    <circle cx=@SvgElement.Cx.ToInvString()
+            cy=@SvgElement.Cy.ToInvString()
+            r=@SvgElement.R.ToInvString()
+            stroke="@SvgElement.Stroke"
+            stroke-width="@SvgElement.StrokeWidth"
+            stroke-linecap="@SvgElement.StrokeLinecap"
+            stroke-linejoin="@SvgElement.StrokeLinejoin"
+            stroke-dasharray="@SvgElement.StrokeDasharray"
+            stroke-dashoffset="@SvgElement.StrokeDashoffset.ToInvString()"
+            fill="@SvgElement.Fill"
+            fill-opacity="@SvgElement.FillOpacity.ToInvString()">
+    </circle>
 
-        fill="@SvgElement.Fill"
-        fill-opacity="@SvgElement.FillOpacity.ToInvString()"
-
-        style="cursor: @(SvgElement.State == ShapeState.Selected ? "move" : "pointer")">
-
-    <text x="50%" y="50%" text-anchor="middle" stroke="#51c5cf" stroke-width="2px">1</text>
-</circle>
+    <text x=@SvgElement.Cx.ToInvString()
+          y=@SvgElement.Cy.ToInvString()
+          text-anchor="middle"
+          dominant-baseline="central"
+          fill="@SvgElement.TextColor"
+          font-family="sans-serif"
+          font-size=@((SvgElement.R * 1.5).ToInvString())
+          class="unselectable">
+        @SvgElement.TextNumber
+    </text>
+</svg>
 
 @if (SvgElement.State == ShapeState.Selected && SvgElement.SvgEditor.EditMode != EditMode.Add && SvgElement.SvgEditor.EditMode != EditMode.Move)
 {
-        <Anchor RingColor="@SvgElement.Color" OnPointerDown="() => OnAnchorSelected(0)" CssCursor="ew-resize" Position="new Coord<double>(SvgElement.Cx + SvgElement.R, SvgElement.Cy)" SvgEditor="SvgElement.SvgEditor"/>
-        <Anchor RingColor="@SvgElement.Color" OnPointerDown="() => OnAnchorSelected(1)" CssCursor="ew-resize" Position="new Coord<double>(SvgElement.Cx - SvgElement.R, SvgElement.Cy)" SvgEditor="SvgElement.SvgEditor" />
-        <Anchor RingColor="@SvgElement.Color" OnPointerDown="() => OnAnchorSelected(2)" CssCursor="ns-resize" Position="new Coord<double>(SvgElement.Cx, SvgElement.Cy + SvgElement.R)" SvgEditor="SvgElement.SvgEditor" />
-        <Anchor RingColor="@SvgElement.Color" OnPointerDown="() => OnAnchorSelected(3)" CssCursor="ns-resize" Position="new Coord<double>(SvgElement.Cx, SvgElement.Cy - SvgElement.R)" SvgEditor="SvgElement.SvgEditor" />
+    <Anchor RingColor="@SvgElement.Color" OnPointerDown="() => OnAnchorSelected(0)" CssCursor="all-scroll" Position="@MathHelper.PointOnCircle(SvgElement.Cx, SvgElement.Cy, SvgElement.ArrowX, SvgElement.ArrowY, SvgElement.R + 40)" SvgEditor="SvgElement.SvgEditor" />
 }

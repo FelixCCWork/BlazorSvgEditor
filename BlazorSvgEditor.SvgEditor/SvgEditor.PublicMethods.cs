@@ -6,7 +6,7 @@ namespace BlazorSvgEditor.SvgEditor;
 
 public partial class SvgEditor
 {
-      //Methods for component communication
+    // Methods for component communication
     public async Task AddExistingShape(Shape shape)
     {
         Shapes.Add(shape);
@@ -31,14 +31,19 @@ public partial class SvgEditor
         {
             int deletedShapeId = SelectedShape.CustomId;
             Shapes.Remove(SelectedShape);
+
+            if (SelectedShape is NumberMarker marker)
+                OnMarkerRemoved(marker);
+
             SelectedShape = null;
             SelectedAnchorIndex = null;
-            
+
             await OnShapeChanged.InvokeAsync(ShapeChangedEventArgs.ShapeDeleted(deletedShapeId));
         }
         else
         {
-            if (ShowDiagnosticInformation) Console.WriteLine("No shape selected - so nothing to delete");
+            if (ShowDiagnosticInformation)
+                Console.WriteLine("No shape selected - so nothing to delete");
         }
     }
     
@@ -48,17 +53,23 @@ public partial class SvgEditor
         if (shape != null)
         {
             Shapes.Remove(shape);
+
+            if (shape is NumberMarker marker)
+                OnMarkerRemoved(marker);
+
             await OnShapeChanged.InvokeAsync(ShapeChangedEventArgs.ShapeDeleted(shapeId));
         }
         else
         {
-            if(ShowDiagnosticInformation) Console.WriteLine("Shape with id " + shapeId + " not found - so nothing to delete");
+            if(ShowDiagnosticInformation) 
+                Console.WriteLine("Shape with id " + shapeId + " not found - so nothing to delete");
         }
     }
     
     public async Task ClearShapes()
     {
         Shapes.Clear();
+        OnClearMarkers();
         await OnShapeChanged.InvokeAsync(ShapeChangedEventArgs.ShapesCleared());
     }
     

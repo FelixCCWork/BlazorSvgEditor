@@ -4,34 +4,38 @@
 @inherits ShapeEditor<Arrow>
 
 <svg @ref=ElementReference
-	 @onpointerdown="Select"
-	 @onclick="ClickShape"
-	 @onpointerenter="Enter"
-	 @onpointerleave="Leave"
-	 style="cursor: @(SvgElement.State == ShapeState.Selected ? "move" : "pointer")">
+     @onpointerdown="Select"
+     @onclick="ClickShape"
+     @onpointerenter="Enter"
+     @onpointerleave="Leave"
+     style="cursor: @(SvgElement.State == ShapeState.Selected ? "move" : "pointer")">
 
-	<defs>
-		<marker id="head" orient="auto"
-				markerWidth="16" markerHeight="16"
-				refX="0.9" refY="2">
-			<path d="M 0 0 L 0.6 2 L 0 4 L 5 2 z" fill="@SvgElement.Stroke" />
-		</marker>
-	</defs>
+    <defs>
+        <marker id="head"
+                orient="auto"
+                markerWidth="16"
+                markerHeight="16"
+                refX="0.9"
+                refY="2">
+            <path d="M 0 0 L 0.6 2 L 0 4 L 5 2 z"
+                  fill="@SvgElement.Stroke" />
+        </marker>
+    </defs>
 
-	<line x1=@SvgElement.X1.ToInvString()
-		  y1=@SvgElement.Y1.ToInvString()
-		  x2=@SvgElement.X2.ToInvString()
-		  y2=@SvgElement.Y2.ToInvString()
-		  stroke="@SvgElement.Stroke"
-		  stroke-width="@SvgElement.StrokeWidth"
-		  stroke-linecap="@SvgElement.StrokeLinecap"
-		  stroke-dasharray="@SvgElement.StrokeDasharray"
-		  stroke-dashoffset="@SvgElement.StrokeDashoffset.ToInvString()"
-		  marker-end="url(#head)" />
+    <line x1=@SvgElement.X1.ToInvString()
+          y1=@SvgElement.Y1.ToInvString()
+          x2=@SvgElement.X2.ToInvString()
+          y2=@SvgElement.Y2.ToInvString()
+          stroke="@SvgElement.Stroke"
+          stroke-width="@SvgElement.StrokeWidth"
+          stroke-linecap="@SvgElement.StrokeLinecap"
+          stroke-dasharray="@SvgElement.StrokeDasharray"
+          stroke-dashoffset="@SvgElement.StrokeDashoffset.ToInvString()"
+          marker-end="url(#head)" />
 </svg>
 
 @if (SvgElement.State == ShapeState.Selected && SvgElement.SvgEditor.EditMode != EditMode.Add && SvgElement.SvgEditor.EditMode != EditMode.Move)
 {
-	<Anchor RingColor="@SvgElement.Color" OnPointerDown="() => OnAnchorSelected(0)" CssCursor="move" Position="new Coord<double>(SvgElement.X1, SvgElement.Y1)" SvgEditor="SvgElement.SvgEditor" />
-	<Anchor RingColor="@SvgElement.Color" OnPointerDown="() => OnAnchorSelected(1)" CssCursor="move" Position="new Coord<double>(SvgElement.X2, SvgElement.Y2)" SvgEditor="SvgElement.SvgEditor" />
+    <Anchor RingColor="@SvgElement.Color" OnPointerDown="() => OnAnchorSelected(0)" CssCursor="move" Position="new Coord<double>(SvgElement.X1, SvgElement.Y1)" SvgEditor="SvgElement.SvgEditor" />
+    <Anchor RingColor="@SvgElement.Color" OnPointerDown="() => OnAnchorSelected(1)" CssCursor="move" Position="new Coord<double>(SvgElement.X2, SvgElement.Y2)" SvgEditor="SvgElement.SvgEditor" />
 }

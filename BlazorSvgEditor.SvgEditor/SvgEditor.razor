@@ -7,17 +7,12 @@
 <div class="@_containerCssClass" style="@_containerCssStyle height: 100%; width: 100%; touch-action: none" @ref="_containerElementReference"
      @onwheel="OnContainerWheel"
      oncontextmenu="return false"
-     
      @ontouchstart="OnTouchStart"
      @ontouchmove="OnTouchMove"
      @ontouchend="OnTouchEnd"
-     
      @onpointerdown="OnContainerPointerDown"
      @onpointermove="OnContainerPointerMove"
-     @onpointerup="OnContainerPointerUp"
-
-
->
+     @onpointerup="OnContainerPointerUp">
 
 
     @if (ShowLoadingSpinner)
@@ -31,64 +26,67 @@
 
             <g style="transform: translate(@(Translate.X.ToInvString())px, @(Translate.Y.ToInvString())px) scale(@Scale.ToInvString())" viewbox="0 0 @ImageSize.Width @ImageSize.Height">
 
-                <image class="@(EnableImageManipulations ? "svg-img-filter" : "")" href="@ImageSource"/>
+                <image class="@(EnableImageManipulations ? "svg-img-filter" : "")" href="@ImageSource" />
 
                 <rect height="@(ImageSize.Height)px" fill="transparent" width="@(ImageSize.Width)px" @onpointerdown="OnUnselectPanelPointerDown"></rect>
 
                 @foreach (var shape in Shapes)
                 {
-                    <DynamicComponent Type="shape.Presenter" Parameters="@(new Dictionary<string, object>() { { "SvgElement", shape } })"/>
+                    <DynamicComponent Type="shape.Presenter" Parameters="@(new Dictionary<string, object>() { { "SvgElement", shape } })" />
                 }
             </g>
-        
+
             @if (ShowDiagnosticInformation)
             {
                 <foreignObject height="94px" width="240px" class="unselectable" x="0" y="0" style="font-size:14px;pointer-events:none;touch-action:none; background-color: white">
                     <b>Scale</b> 1:@(Math.Round(Scale, 3).ToString())
-                    <br/>
+                    <br />
                     <b>Translate:</b> X: @(Math.Round(Translate.X, 1))px Y: @(Math.Round(Translate.Y, 1))px
-                    <br/>
+                    <br />
                     <b>Pointer Offset:</b> X: @(_pointerPosition.X)px Y: @(_pointerPosition.Y)px
-                    <br/>
-                    <b>Detramsform:</b> X: @(Math.Round((_pointerPosition.X - Translate.X) / Scale, 1))px Y: @(Math.Round(_pointerPosition.Y / Scale - Translate.Y / Scale, 1))px
+                    <br />
+                    <b>Detransform:</b> X: @(Math.Round((_pointerPosition.X - Translate.X) / Scale, 1))px Y: @(Math.Round(_pointerPosition.Y / Scale - Translate.Y / Scale, 1))px
                 </foreignObject>
 
                 <foreignObject height="46px" width="250px" class="unselectable" x="0px" y="100" style="font-size:14px;pointer-events:none;touch-action:none; background-color: white">
                     <b>ContainerBox:</b> X: @(Math.Round(_containerBoundingBox.Width, 1))px Y: @(Math.Round(_containerBoundingBox.Height, 1))px
                 </foreignObject>
-        
+
                 <foreignObject visibility="hidden" height="120px" width="300px" class="unselectable" x="0px" y="150" style="font-size:14px;pointer-events:none;touch-action:none; background-color: white">
-                    @foreach(var shape in Shapes)
+                    @foreach (var shape in Shapes)
                     {
                         @shape.ToString()
-                        <br/>
+                        <br />
                     }
                 </foreignObject>
             }
-            
+
         </svg>
 
     }
-    
+
 </div>
 
 @if (EnableImageManipulations)
 {
     <style>
-        .svg-img-filter{
-        filter: brightness(@(ImageManipulations?.Brightness)%) contrast(@(ImageManipulations?.Contrast)%) saturate(@(ImageManipulations?.Saturation)%) hue-rotate(@(ImageManipulations?.Hue)deg)
+        .svg-img-filter {
+            filter: brightness(@(ImageManipulations?.Brightness)%) contrast(@(ImageManipulations?.Contrast)%) saturate(@(ImageManipulations?.Saturation)%) hue-rotate(@(ImageManipulations?.Hue)deg)
         }
     </style>
 }
 
 <style>
-    .cursor-add-circle{
-        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 20 20"><circle fill="none" stroke="orange" stroke-width="3" cx="10" cy="10" r="9"/></svg>') 15 15, auto;
+    .unselectable {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
-    .cursor-add-rectangle{
-        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 20 20"><rect fill="none" stroke="orange" stroke-width="3" x="1" y="1" width="18" height="15"/></svg>') 15 15, auto;
-    }
-    .cursor-add-polygon{
-        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 20 20"><polygon fill="none" stroke="orange" stroke-width="3" points="10,1 1,18 19,18"/></svg>') 15 15, auto;
+
+    .cursor-add-shape {
+        cursor: crosshair;
     }
 </style>

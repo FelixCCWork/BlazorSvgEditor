@@ -39,7 +39,8 @@ public class Arrow : Shape
 		{
 			case EditMode.Add:
 
-				if (AddPosition.X.IsEqual(-1)) AddPosition = new Coord<double>(X1, Y1);
+				if (AddPosition.X.IsEqual(-1))
+					AddPosition = new Coord<double>(X1, Y1);
 
 				X2 = resultCoord.X;
 				Y2 = resultCoord.Y;

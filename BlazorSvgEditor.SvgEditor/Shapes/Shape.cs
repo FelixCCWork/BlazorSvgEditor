@@ -10,33 +10,40 @@ public abstract class Shape
     {
         SvgEditor = svgEditor;
     }
-    
+
     public SvgEditor SvgEditor { get; set; }
-    
+
     //Helper properties and methods for easier access
     private double GetScaleValue(double value, int decimals = 1)
     {
         return !SvgEditor.ScaleShapes ? value : SvgEditor.GetScaledValue(value, decimals);
     }
-    
-    
+
     internal abstract Type Presenter { get; }
-    
+
     public int CustomId { get; set; } = 0;
     public abstract ShapeType ShapeType { get; }
     public string Color { get; set; } = "#ff8c00";
 
-    internal string Fill { get; set; } = "transparent";
+    protected virtual bool Filled { get; } = false;
+
+    private string fill = "transparent";
+    internal string Fill
+    {
+        get => Filled ? Color : fill;
+        set => fill = value;
+    }
+
     internal double FillOpacity { get; set; } = 1;
     internal string Stroke => Color; //Orange
-    
+
     private int _normalRawStrokeWidth = 3;
     private double RawStrokeWidth { get; set; } = 3;
-    internal string StrokeWidth  => GetScaleValue(RawStrokeWidth).ToInvString() + "px"; 
-    
+    internal string StrokeWidth => GetScaleValue(RawStrokeWidth).ToInvString() + "px";
+
     internal string StrokeLinejoin { get; set; } = "round";
     internal string StrokeLinecap { get; set; } = "round";
-    
+
     private int RawStrokeDasharray { get; set; } = 0;
     internal string StrokeDasharray => GetScaleValue(RawStrokeDasharray).ToInvString();
     internal double StrokeDashoffset { get; set; }
@@ -54,42 +61,42 @@ public abstract class Shape
         RawStrokeDasharray = 10;
         StrokeDashoffset = 0;
         Fill = Color;
-        FillOpacity = 0.4;
+        FillOpacity = Filled ? 0.5 : 0.4;
     }
-    
+
     internal void UnSelectShape()
     {
         State = ShapeState.None;
-        
+
         //Visual unselect logic
         RawStrokeWidth = _normalRawStrokeWidth;
         RawStrokeDasharray = 0;
         Fill = "transparent";
         FillOpacity = 1;
     }
-    
+
     internal void HoverShape()
     {
         if (State == ShapeState.Selected) return;
 
         State = ShapeState.Hovered;
-        
+
         //Visual hover logic
         Fill = Color;
-        FillOpacity = 0.2;
+        FillOpacity = Filled ? 0.7 : 0.2;
     }
-    
+
     internal void UnHoverShape()
     {
         if (State != ShapeState.Hovered) return;
-        
+
         State = ShapeState.None;
-        
+
         //Visual unhover logic
         Fill = "transparent";
         FillOpacity = 1;
     }
-    
+
     protected abstract BoundingBox Bounds { get; }
 
     internal abstract void SnapToInteger();
@@ -101,9 +108,9 @@ public abstract class Shape
     {
         await SvgEditor.ShapeAddedCompleted(this);
     }
-    
 
-    
+
+
     protected async Task FireOnShapeChangedMove() => await SvgEditor.OnShapeChanged.InvokeAsync(ShapeChangedEventArgs.ShapeMoved(this));
     protected async Task FireOnShapeChangedEdit() => await SvgEditor.OnShapeChanged.InvokeAsync(ShapeChangedEventArgs.ShapeEdited(this));
 
@@ -115,7 +122,7 @@ public abstract class Shape
 
 internal enum ShapeState
 {
-    None, 
+    None,
     Selected,
     Hovered,
 }

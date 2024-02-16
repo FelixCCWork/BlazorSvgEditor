@@ -17,5 +17,6 @@ public enum ShapeType
     Circle,
     Arrow,
     NumberMarker,
+    HideRect,
 }
 
