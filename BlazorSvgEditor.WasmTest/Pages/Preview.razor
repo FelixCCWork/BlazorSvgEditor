@@ -47,6 +47,12 @@
                         </svg>
                         Circle
                     </button>
+                    <button @onclick="() => AddShape(ShapeType.NumberMarker)" type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium bg-transparent border-t border-b border-gray-600 hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white">
+                        <svg aria-hidden="true" class="w-4 h-4 mr-2 fill-current" fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M24 45.25q-4.4 0-8.275-1.65T8.95 39.05q-2.9-2.9-4.55-6.775Q2.75 28.4 2.75 24q0-4.45 1.65-8.325 1.65-3.875 4.55-6.75t6.775-4.55Q19.6 2.7 24 2.7q4.45 0 8.325 1.675 3.875 1.675 6.75 4.55t4.55 6.75Q45.3 19.55 45.3 24q0 4.4-1.675 8.275t-4.55 6.775q-2.875 2.9-6.75 4.55T24 45.25Zm0-4.7q6.9 0 11.725-4.825Q40.55 30.9 40.55 24q0-6.9-4.825-11.725Q30.9 7.45 24 7.45q-6.9 0-11.725 4.825Q7.45 17.1 7.45 24q0 6.9 4.825 11.725Q17.1 40.55 24 40.55ZM24 24Z" />
+                        </svg>
+                        Marker
+                    </button>
                     <button @onclick="() => AddShape(ShapeType.Rectangle)" type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium bg-transparent border-t border-b border-gray-600 hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white">
                         <svg aria-hidden="true" class="w-4 h-4 mr-2 fill-current" fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
                             <path d="M2.75 41.25V6.7H45.3v34.55Zm4.7-4.7h33.1v-25.1H7.45Zm0 0v-25.1 25.1Z"/>
@@ -188,7 +194,7 @@
   overflow: hidden;
     height: 100%;
     display: grid;
-    grid-template-columns: 1fr 440px;
+    grid-template-columns: 1fr 500px;
     grid-template-rows: auto 1fr auto;
     gap: 10px;
     grid-auto-flow: row;

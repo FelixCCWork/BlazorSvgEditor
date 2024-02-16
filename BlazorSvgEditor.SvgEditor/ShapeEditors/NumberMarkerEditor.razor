@@ -1,0 +1,38 @@
+@using BlazorSvgEditor.SvgEditor.Helper
+@using BlazorSvgEditor.SvgEditor.Misc
+@using BlazorSvgEditor.SvgEditor.Shapes
+@inherits ShapeEditor<NumberMarker>
+
+<circle @ref=ElementReference
+
+        @onpointerdown="Select"
+        @onclick="ClickShape"
+        @onpointerenter="Enter"
+        @onpointerleave="Leave"
+
+        cx=@SvgElement.Cx.ToInvString()
+        cy=@SvgElement.Cy.ToInvString()
+        r=@SvgElement.R.ToInvString()
+
+        stroke="@SvgElement.Stroke"
+        stroke-width="@SvgElement.StrokeWidth"
+        stroke-linecap="@SvgElement.StrokeLinecap"
+        stroke-linejoin="@SvgElement.StrokeLinejoin"
+        stroke-dasharray="@SvgElement.StrokeDasharray"
+        stroke-dashoffset="@SvgElement.StrokeDashoffset.ToInvString()"
+
+        fill="@SvgElement.Fill"
+        fill-opacity="@SvgElement.FillOpacity.ToInvString()"
+
+        style="cursor: @(SvgElement.State == ShapeState.Selected ? "move" : "pointer")">
+
+    <text x="50%" y="50%" text-anchor="middle" stroke="#51c5cf" stroke-width="2px">1</text>
+</circle>
+
+@if (SvgElement.State == ShapeState.Selected && SvgElement.SvgEditor.EditMode != EditMode.Add && SvgElement.SvgEditor.EditMode != EditMode.Move)
+{
+        <Anchor RingColor="@SvgElement.Color" OnPointerDown="() => OnAnchorSelected(0)" CssCursor="ew-resize" Position="new Coord<double>(SvgElement.Cx + SvgElement.R, SvgElement.Cy)" SvgEditor="SvgElement.SvgEditor"/>
+        <Anchor RingColor="@SvgElement.Color" OnPointerDown="() => OnAnchorSelected(1)" CssCursor="ew-resize" Position="new Coord<double>(SvgElement.Cx - SvgElement.R, SvgElement.Cy)" SvgEditor="SvgElement.SvgEditor" />
+        <Anchor RingColor="@SvgElement.Color" OnPointerDown="() => OnAnchorSelected(2)" CssCursor="ns-resize" Position="new Coord<double>(SvgElement.Cx, SvgElement.Cy + SvgElement.R)" SvgEditor="SvgElement.SvgEditor" />
+        <Anchor RingColor="@SvgElement.Color" OnPointerDown="() => OnAnchorSelected(3)" CssCursor="ns-resize" Position="new Coord<double>(SvgElement.Cx, SvgElement.Cy - SvgElement.R)" SvgEditor="SvgElement.SvgEditor" />
+}

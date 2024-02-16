@@ -77,6 +77,14 @@ public partial class SvgEditor
                 };
                 break;
 
+            case ShapeType.NumberMarker:
+                newShape = new NumberMarker(this)
+                {
+                    Cx = DetransformOffset(e).X,
+                    Cy = DetransformOffset(e).Y
+                };
+                break;
+
             default:
                 throw new ArgumentOutOfRangeException(nameof(ShapeType));
         }

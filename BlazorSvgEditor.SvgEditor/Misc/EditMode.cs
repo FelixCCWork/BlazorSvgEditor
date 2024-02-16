@@ -16,5 +16,6 @@ public enum ShapeType
     Rectangle,
     Circle,
     Arrow,
+    NumberMarker,
 }
 
