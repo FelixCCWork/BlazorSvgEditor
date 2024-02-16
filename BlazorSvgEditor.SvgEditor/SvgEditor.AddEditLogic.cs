@@ -66,9 +66,19 @@ public partial class SvgEditor
                     Cy = DetransformOffset(e).Y
                 };
                 break;
-            
+
+            case ShapeType.Arrow:
+                newShape = new Arrow(this)
+                {
+                    X1 = DetransformOffset(e).X,
+                    Y1 = DetransformOffset(e).Y,
+                    X2 = DetransformOffset(e).X + 0.1,
+                    Y2 = DetransformOffset(e).Y + 0.1
+                };
+                break;
+
             default:
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(ShapeType));
         }
 
         var newShapeId = -1;
@@ -94,5 +104,4 @@ public partial class SvgEditor
         SelectedShape.SelectShape();
         await OnShapeChanged.InvokeAsync(ShapeChangedEventArgs.ShapeAdded(shape));
     }
-
 }

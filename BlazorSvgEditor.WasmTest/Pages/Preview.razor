@@ -53,11 +53,31 @@
                         </svg>
                         Rectangle
                     </button>
-                    <button @onclick="() => AddShape(ShapeType.Polygon)" type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium bg-transparent border border-gray-600 rounded-r-md hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white">
+                    <button @onclick="() => AddShape(ShapeType.Polygon)" type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium bg-transparent border-t border-b border-l border-gray-600 hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white">
                         <svg aria-hidden="true" class="w-4 h-4 mr-2 fill-current" fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M30.45 45.15V39.6l-14.5-7.25H4.3v-13.3h11l5.15-5.75V2.25h13.3v13.3h-9.8l-6.4 7.25v5.8l12.9 6.35v-3.1h13.3v13.3Zm-5.9-33.7h5v-5h-5ZM8.45 28.2h5v-5h-5ZM34.55 41h5v-5h-5Zm-7.5-32.05ZM10.95 25.7Zm26.1 12.8Z"/>
+                            <path d="M30.45 45.15V39.6l-14.5-7.25H4.3v-13.3h11l5.15-5.75V2.25h13.3v13.3h-9.8l-6.4 7.25v5.8l12.9 6.35v-3.1h13.3v13.3Zm-5.9-33.7h5v-5h-5ZM8.45 28.2h5v-5h-5ZM34.55 41h5v-5h-5Zm-7.5-32.05ZM10.95 25.7Zm26.1 12.8Z" />
                         </svg>
                         Polygon
+                    </button>
+                    <button @onclick="() => AddShape(ShapeType.Arrow)" type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium bg-transparent border border-gray-600 rounded-r-md hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white">
+                        <svg aria-hidden="true" class="w-4 h-4 mr-2 fill-current" fill="currentColor" stroke="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <marker id="head" orient="auto"
+                                        markerWidth="16" markerHeight="16"
+                                        refX="0.9" refY="2">
+                                    <path d="M 0 0 L 0.6 2 L 0 4 L 5 2 z" />
+                                </marker>
+                            </defs>
+
+                            <line x1="6"
+                                  y1="6"
+                                  x2="38"
+                                  y2="38"
+                                  stroke-width="4"
+                                  stroke-linecap="round"
+                                  marker-end="url(#head)" />
+                        </svg>
+                        Arrow
                     </button>
                 </div>
 
@@ -168,7 +188,7 @@
   overflow: hidden;
     height: 100%;
     display: grid;
-    grid-template-columns: 1fr 360px;
+    grid-template-columns: 1fr 440px;
     grid-template-rows: auto 1fr auto;
     gap: 10px;
     grid-auto-flow: row;

@@ -15,5 +15,6 @@ public enum ShapeType
     Polygon,
     Rectangle,
     Circle,
+    Arrow,
 }
 
