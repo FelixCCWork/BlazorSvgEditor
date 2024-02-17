@@ -35,4 +35,11 @@
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.1" />
     </ItemGroup>
 
+
+    <ItemGroup>
+      <Content Update="wwwroot\svgEditor.js">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

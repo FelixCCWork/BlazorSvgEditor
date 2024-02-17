@@ -82,8 +82,11 @@ public partial class SvgEditor
     //Use this method to set the translation to a specific value -> e.g. to syncronize the translation of two SvgEditors
     public void SetTranslateAndScale(Coord<double>? newTranslate = null, double? newScale = null)
     {
-        if(newTranslate != null) Translate = newTranslate.Value;
-        if (newScale != null) Scale = newScale.Value;
+        if(newTranslate != null)
+            Translate = newTranslate.Value;
+        if (newScale != null)
+            Scale = newScale.Value;
+
         StateHasChanged();
     }
     public (Coord<double> translation, double scale) GetTranslateAndScale() => (Translate, Scale);

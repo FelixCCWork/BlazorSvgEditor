@@ -16,14 +16,15 @@
         <SvgEditor @ref="svgEditor" CssClass="border border-gray-200 rounded-lg shadow-md" MinScale="0.8" ImageSize="(1000,750)" ImageManipulations="ImageManipulations"
                    OnShapeChanged="EditorShapeChanged" ImageSourceLoadingFunc="GetImageSource"
                    OnShapeClicked="EditorShapeClicked"
+                   ShowDiagnosticInformation="true"
                    @bind-SelectedShapeId="SelectedShapeId" ReadOnly="ReadOnly">
             <LoadingSpinner>
 
                 <div class="flex items-center justify-center h-full">
                     <div role="status">
                         <svg aria-hidden="true" class="inline w-16 h-16 mr-2 text-gray-200 animate-spin fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
-                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
+                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
                         </svg>
                         <span class="sr-only">Loading...</span>
                     </div>
@@ -43,7 +44,7 @@
                 <div class="inline-flex rounded-md shadow-sm text-gray-900" role="group">
                     <button @onclick="@(() => AddShape(ShapeType.Circle, "#378805"))" type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium border border-gray-600 rounded-l-lg hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white">
                         <svg aria-hidden="true" class="w-4 h-4 mr-2 fill-current" fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M24 45.25q-4.4 0-8.275-1.65T8.95 39.05q-2.9-2.9-4.55-6.775Q2.75 28.4 2.75 24q0-4.45 1.65-8.325 1.65-3.875 4.55-6.75t6.775-4.55Q19.6 2.7 24 2.7q4.45 0 8.325 1.675 3.875 1.675 6.75 4.55t4.55 6.75Q45.3 19.55 45.3 24q0 4.4-1.675 8.275t-4.55 6.775q-2.875 2.9-6.75 4.55T24 45.25Zm0-4.7q6.9 0 11.725-4.825Q40.55 30.9 40.55 24q0-6.9-4.825-11.725Q30.9 7.45 24 7.45q-6.9 0-11.725 4.825Q7.45 17.1 7.45 24q0 6.9 4.825 11.725Q17.1 40.55 24 40.55ZM24 24Z"/>
+                            <path fill-rule="evenodd" d="M24 45.25q-4.4 0-8.275-1.65T8.95 39.05q-2.9-2.9-4.55-6.775Q2.75 28.4 2.75 24q0-4.45 1.65-8.325 1.65-3.875 4.55-6.75t6.775-4.55Q19.6 2.7 24 2.7q4.45 0 8.325 1.675 3.875 1.675 6.75 4.55t4.55 6.75Q45.3 19.55 45.3 24q0 4.4-1.675 8.275t-4.55 6.775q-2.875 2.9-6.75 4.55T24 45.25Zm0-4.7q6.9 0 11.725-4.825Q40.55 30.9 40.55 24q0-6.9-4.825-11.725Q30.9 7.45 24 7.45q-6.9 0-11.725 4.825Q7.45 17.1 7.45 24q0 6.9 4.825 11.725Q17.1 40.55 24 40.55ZM24 24Z" />
                         </svg>
                         Circle
                     </button>
@@ -113,7 +114,7 @@
                 <div class="inline-flex mt-2" role="group">
                     <button @onclick="ResetTransform" type="button" class="shadow-sm flex-grow focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2 mr-2">Reset Transformation</button>
                     <button @onclick="ClearAll" type="button" class="shadow-sm flex-grow focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2 mr-2">Clear</button>
-                    <button @onclick="@(()=> ReadOnly=!ReadOnly)" type="button" class="shadow-sm flex-grow focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2">@(ReadOnly? "Read Only":"Editable")</button>
+                    <button @onclick="@(()=> ReadOnly=!ReadOnly)" type="button" class="shadow-sm flex-grow focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2">@(ReadOnly ? "Read Only" : "Editable")</button>
                 </div>
             </div>
 
@@ -125,19 +126,19 @@
 
                     @*
                     <div class="relative">
-                        <input @bind="imageUrl" type="text" id="floating_outlined" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "/>
-                        <label for="floating_outlined" class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Url</label>
+                    <input @bind="imageUrl" type="text" id="floating_outlined" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "/>
+                    <label for="floating_outlined" class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Url</label>
                     </div>
-                    
+
                     *@
 
                     <div class="relative">
-                        <input @bind="imageUrl" type="text" id="disabled_outlined" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " disabled/>
+                        <input @bind="imageUrl" type="text" id="disabled_outlined" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " disabled />
                         <label for="disabled_outlined" class="absolute text-sm text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Url</label>
                     </div>
 
                     <div class="relative" style="width: 80px;">
-                        <input @bind="delayString" type="text" id="floating_outlined2" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "/>
+                        <input @bind="delayString" type="text" id="floating_outlined2" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="floating_outlined2" class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Delay</label>
                     </div>
 
@@ -188,6 +189,12 @@
                 else
                 {
                     <button @onclick="DeleteShape" type="button" style="flex-grow: 0" class=" shadow-sm flex-grow focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2">Delete Shape</button>
+                    <button @onclick="SaveImage" type="button" style="flex-grow: 0" class=" shadow-sm flex-grow focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2">Save</button>
+                }
+
+                @if (svgEditor is not null)
+                {
+                    <img src="@svgEditor.ImageResult" style="width: 100%; height: 100%; object-fit: contain;" />
                 }
 
             </div>
@@ -200,11 +207,11 @@
         <div>
             BlazorSvgEditor by <a class="underline" target="_blank" href="https://twitter.com/florian03_1">florian03</a>
         </div>
-        
+
         <div class="mx-auto text-gray-800 italic">
             @status
         </div>
-        
+
         <div>
             Available on <a class="underline" href="https://github.com/florian03-1/BlazorSvgEditor" target="_blank">GitHub</a> and <a class="underline" target="_blank" href="https://www.nuget.org/packages/BlazorSvgEditor/">NuGet</a>
         </div>
@@ -213,27 +220,35 @@
 
 
 <style>
-  .o-container {  
-  overflow: hidden;
-    height: 100%;
-    display: grid;
-    grid-template-columns: 1fr 560px;
-    grid-template-rows: auto 1fr auto;
-    gap: 10px;
-    grid-auto-flow: row;
-    grid-template-areas:
-      "header header"
-      "editor information"
-      "footer footer";
-  }
-  
-  .o-header { grid-area: header; }
-  
-  .o-footer { grid-area: footer; }
-  
-  .o-editor { grid-area: editor; }
-  
-  .o-information { grid-area: information; }
+    .o-container {
+        overflow: hidden;
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr 560px;
+        grid-template-rows: auto 1fr auto;
+        gap: 10px;
+        grid-auto-flow: row;
+        grid-template-areas:
+            "header header"
+            "editor information"
+            "footer footer";
+    }
+
+    .o-header {
+        grid-area: header;
+    }
+
+    .o-footer {
+        grid-area: footer;
+    }
+
+    .o-editor {
+        grid-area: editor;
+    }
+
+    .o-information {
+        grid-area: information;
+    }
 
 </style>
 

@@ -26,7 +26,9 @@ public partial class Preview
     {
         if (firstRender)
         {
-            if (svgEditor == null) return;
+            if (svgEditor == null) 
+                return;
+
             await svgEditor.ReloadImage();
             await svgEditor.AddExistingShape(new Circle(svgEditor){CustomId = 1, Cx = 400, Cy = 300 , R = 100});
             await svgEditor.AddExistingShape(new Rectangle(svgEditor){CustomId = 2, X = 700, Y = 400 , Width = 100, Height = 50});
@@ -43,7 +45,9 @@ public partial class Preview
 
     private async Task ReloadEditorImage()
     {
-        if (svgEditor == null) return;
+        if (svgEditor == null) 
+            return;
+
         await svgEditor.ReloadImage();
     }
 
@@ -51,6 +55,7 @@ public partial class Preview
     {
         ImageManipulations = new();
         await Task.Delay(int.Parse(delayString));
+
         return (imageUrl, 1000, 750);
     }
 
@@ -112,6 +117,11 @@ public partial class Preview
     private void DeleteShape()
     {
         svgEditor?.RemoveSelectedShape();
+    }
+
+    private void SaveImage()
+    {
+        svgEditor?.SaveImage();
     }
 
     void EditorShapeClicked(int CustomId)

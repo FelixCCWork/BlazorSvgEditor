@@ -74,7 +74,9 @@ public partial class SvgEditor
         get => SelectedShape?.CustomId ?? 0;
         set
         {
-            if(value == SelectedShapeId) return;
+            if(value == SelectedShapeId)
+                return;
+
             if (value == 0)
             {
                 SelectedShape?.UnSelectShape();
